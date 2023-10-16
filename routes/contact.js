@@ -44,10 +44,10 @@ router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     await ContactNumbers.findByIdAndDelete(id);
-    res.status(200).json({ message: "number delete successfully" });
+    return res.status(200).json({ message: "number delete successfully" });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ err: "Server error" });
+    return res.status(500).json({ err: "Server error" });
   }
 });
 
@@ -60,7 +60,7 @@ router.put("/:id", async (req, res) => {
     if (!editNumber) {
       return res.status(404).json({ message: "number not found" });
     }
-    res.status(201).json({ message: "number edit successfully" });
+    return res.status(201).json({ message: "number edit successfully" });
   } catch (err) {
     console.log(err);
     res.status(500).json({ err: "Server error" });
