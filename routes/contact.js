@@ -13,16 +13,16 @@ router.post("/addcontacts", async (req, res) => {
 
     if (existNumber) {
       return res
-        .status(404)
+        .status(403)
         .json({ message: "already number exist in your database" });
-    } else {
-      const newContact = new ContactNumbers({ name, number });
-      await newContact.save();
-      res.status(200).json({ message: "successfully add details" });
     }
+    const newContact = new ContactNumbers({ name, number });
+    await newContact.save();
+    return res.status(201).json({ message: "successfully add details" });
   } catch (err) {
     console.log(err);
-    res.status(404).json({ err: "Server error" });
+
+    return res.status(500).json({ err: "Server error" });
   }
 });
 
@@ -34,7 +34,7 @@ router.get("/allcontacts", async (req, res) => {
     res.status(200).json(getContacts);
   } catch (err) {
     console.log(err);
-    res.status(404).json({ err: "Server error" });
+    res.status(500).json({ err: "Server error" });
   }
 });
 
@@ -47,7 +47,7 @@ router.delete("/:id", async (req, res) => {
     res.status(200).json({ message: "number delete successfully" });
   } catch (err) {
     console.log(err);
-    res.status(404).json({ err: "Server error" });
+    res.status(500).json({ err: "Server error" });
   }
 });
 
@@ -60,10 +60,25 @@ router.put("/:id", async (req, res) => {
     if (!editNumber) {
       return res.status(404).json({ message: "number not found" });
     }
-    res.status(200).json({ message: "number edit successfully" });
+    res.status(201).json({ message: "number edit successfully" });
   } catch (err) {
     console.log(err);
-    res.status(404).json({ err: "Server error" });
+    res.status(500).json({ err: "Server error" });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getContacts = await ContactNumbers.findById(id);
+    if (getContacts) {
+      res.status(200).json(getContacts);
+    } else {
+      return res.status(404).json({ message: "id not found" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err: "Server error" });
   }
 });
 

@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .App-logo {
@@ -24,15 +29,18 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+table {
+  background-color: aqua;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+tr th {
+  padding: 10px 60px;
+  margin: 10px 13px;
+  border: 1px solid black;
+}
+
+td {
+  background-color: antiquewhite;
+  padding: 10px 10px;
+  border: 1px solid black;
 }
